@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolajon — Xush kelibsiz!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#eafcff; --sky-bottom:#c7f1fb;
+    --blue:#1b56db; --blue-dark:#123b94;
+    --yellow:#ffe14a; --yellow-deep:#ffce1f;
+    --cyan:#21e1e1;
+    --ink:#0c2350; --white:#ffffff;
+    --tg-1:#2aabee; --tg-2:#229ed9;
+    --ig-1:#f9ce34; --ig-2:#ee2a7b; --ig-3:#6228d7;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    font-family:'Quicksand', sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 65%, #b9ecfa 100%);
+    overflow-x:hidden;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    padding:0 0 40px;
+  }
+
+  /* ---------- fon bezaklari ---------- */
+  .bg-cloud{position:absolute;border-radius:100px;filter:blur(.5px);opacity:.85;}
+  .bg-cloud::before,.bg-cloud::after{content:'';position:absolute;border-radius:50%;background:inherit;}
+  .cl1{width:180px;height:90px;background:var(--yellow);top:-20px;left:-40px;animation:drift 9s ease-in-out infinite;}
+  .cl1::before{width:90px;height:90px;top:-40px;left:20px;}
+  .cl1::after{width:70px;height:70px;top:-26px;left:100px;}
+  .cl2{width:130px;height:70px;background:var(--cyan);top:120px;right:-30px;opacity:.75;animation:drift 7s ease-in-out infinite reverse;}
+  .cl2::before{width:60px;height:60px;top:-28px;left:15px;}
+  .cl2::after{width:44px;height:44px;top:-18px;left:66px;}
+  .cl3{width:220px;height:100px;background:#bfeaff;bottom:-30px;left:50%;opacity:.9;animation:driftCenter 11s ease-in-out infinite;}
+  .cl3::before{width:100px;height:100px;top:-46px;left:20px;}
+  .cl3::after{width:80px;height:80px;top:-34px;left:120px;}
+  @keyframes drift{0%,100%{transform:translateX(0) translateY(0);}50%{transform:translateX(14px) translateY(-6px);}}
+  @keyframes driftCenter{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(calc(-50% + 12px)) translateY(-4px);}}
+  .star{position:absolute;color:var(--yellow-deep);font-size:14px;animation:twinkle 2.6s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8);}50%{opacity:1;transform:scale(1.15);}}
+
+  /* ---------- kontent ---------- */
+  .content{position:relative;z-index:2;width:100%;max-width:440px;padding:44px 22px 0;}
+  .hero{text-align:center;margin-bottom:30px;position:relative;}
+
+  .sparkle{position:absolute;top:-6px;left:calc(50% - 96px);width:60px;height:60px;pointer-events:none;}
+  .ray{position:absolute;width:5px;height:22px;background:var(--yellow-deep);border-radius:3px;left:27px;top:0;
+       transform-origin:2.5px 30px;animation:twinkle 2.2s ease-in-out infinite;}
+  .ray:nth-child(1){transform:rotate(0deg);animation-delay:0s;}
+  .ray:nth-child(2){transform:rotate(30deg);animation-delay:.2s;}
+  .ray:nth-child(3){transform:rotate(60deg);animation-delay:.4s;}
+  .ray:nth-child(4){transform:rotate(-30deg);animation-delay:.6s;}
+  .ray:nth-child(5){transform:rotate(-60deg);animation-delay:.8s;}
+
+  .logo-halo{
+    width:172px;height:172px;margin:0 auto 18px;border-radius:50%;background:var(--white);
+    box-shadow:0 0 0 6px rgba(255,255,255,.6),0 14px 34px rgba(18,59,148,.28);
+    overflow:hidden;animation:bob 4.5s ease-in-out infinite;
+  }
+  .logo-halo img{width:100%;height:100%;object-fit:cover;display:block;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+
+  /* Bitta, statik salomlashuv — endi hech qanday matn almashtirish yo'q, shuning uchun ekranda ikkita matn
+     ustma-ust chiqib "glitch" bo'lish muammosi butunlay yo'qoladi */
+  .speech{position:relative;background:var(--white);border-radius:20px;padding:14px 20px;
+    box-shadow:0 8px 20px rgba(18,59,148,.12);display:inline-block;max-width:320px;}
+  .speech::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+    width:18px;height:18px;background:var(--white);clip-path:polygon(50% 0,0 100%,100% 100%);}
+  .speech p{margin:0;}
+  .speech .greet{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15.5px;color:var(--blue-dark);margin-bottom:3px;}
+  .speech .sub{font-size:12.5px;color:#5d688c;line-height:1.4;}
+
+  /* ---------- tugmalar ---------- */
+  .actions{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+  .cloud-btn{
+    position:relative;border:none;cursor:pointer;width:100%;text-align:left;
+    padding:16px 22px 16px 60px;border-radius:26px;display:flex;align-items:center;gap:12px;
+    text-decoration:none;font-family:'Quicksand',sans-serif;
+    box-shadow:0 8px 18px rgba(18,59,148,.16);
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s ease;
+  }
+  .cloud-btn::before{content:'';position:absolute;width:30px;height:30px;border-radius:50%;background:inherit;top:-11px;left:26px;}
+  .cloud-btn::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:inherit;top:-7px;left:52px;}
+  .cloud-btn:active{transform:scale(.96) translateY(2px);box-shadow:0 4px 10px rgba(18,59,148,.16);}
+  .cloud-btn .ico{position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.4);
+    display:flex;align-items:center;justify-content:center;}
+  .cloud-btn .txt{display:flex;flex-direction:column;gap:1px;}
+  .cloud-btn strong{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14.5px;color:var(--ink);}
+  .cloud-btn small{font-size:11.5px;color:rgba(12,35,80,.65);font-weight:600;}
+
+  .cloud-btn.yellow{background:var(--yellow);}
+  .cloud-btn.cyan{background:var(--cyan);}
+
+  /* Telegram — o'zining haqiqiy brend ko'k rangida */
+  .cloud-btn.telegram{background:linear-gradient(135deg,var(--tg-1),var(--tg-2));}
+  .cloud-btn.telegram strong{color:#fff;}
+  .cloud-btn.telegram small{color:rgba(255,255,255,.85);}
+  .cloud-btn.telegram .ico{background:rgba(255,255,255,.22);}
+  .cloud-btn.telegram .ico svg{width:17px;height:17px;}
+
+  /* Instagram — asl gradientga yaqin, ochroq (avvalgi to'q ko'k emas) */
+  .cloud-btn.instagram{background:linear-gradient(135deg,var(--ig-1) 0%,var(--ig-2) 55%,var(--ig-3) 100%);}
+  .cloud-btn.instagram strong{color:#fff;}
+  .cloud-btn.instagram small{color:rgba(255,255,255,.9);}
+  .cloud-btn.instagram .ico{background:rgba(255,255,255,.28);}
+  .cloud-btn.instagram .ico svg{width:17px;height:17px;}
+
+  .phone-card{max-height:0;opacity:0;overflow:hidden;transition:all .28s ease;
+    background:var(--white);border-radius:20px;margin-top:-4px;}
+  .phone-card.show{max-height:100px;opacity:1;padding:14px 20px;margin-bottom:2px;box-shadow:0 8px 18px rgba(18,59,148,.12);}
+  .phone-card .num{font-family:'Baloo 2',sans-serif;font-size:19px;font-weight:800;color:var(--blue-dark);margin:0 0 6px;}
+  .phone-card .call-btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);
+    color:#fff;font-weight:700;font-size:12.5px;text-decoration:none;padding:8px 16px;border-radius:999px;}
+
+  .loading-note, .error-note{text-align:center;font-size:12.5px;color:#7186ad;padding:14px 0;}
+  .error-note{color:#c0392b;}
+
+  footer{text-align:center;margin-top:36px;position:relative;padding-top:18px;}
+  footer p{font-size:11.5px;color:#7186ad;font-weight:600;margin:0;}
+
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</head>
+<body>
+
+  <div class="bg-cloud cl1"></div>
+  <div class="bg-cloud cl2"></div>
+  <div class="bg-cloud cl3"></div>
+  <div class="star" style="top:60px;left:18%;">✦</div>
+  <div class="star" style="top:150px;right:14%;animation-delay:.8s;">✦</div>
+  <div class="star" style="top:280px;left:8%;animation-delay:1.4s;">✦</div>
+  <div class="star" style="top:340px;right:10%;animation-delay:.4s;">✦</div>
+
+  <main class="content">
+
+    <div class="hero">
+      <div class="sparkle" aria-hidden="true">
+        <span class="ray"></span><span class="ray"></span><span class="ray"></span><span class="ray"></span><span class="ray"></span>
+      </div>
+      <div class="logo-halo">
+      <img src="/media/logo/bolajon_logo.jpg" alt="Bolajon">
+      </div>
+      <div class="speech">
+        <p class="greet">Bolajonga xush kelibsiz!</p>
+        <p class="sub">Bolajonlar uchun mehr bilan tanlangan mahsulotlar 💛💙🧸</p>
+      </div>
+    </div>
+
+    <div class="actions" id="actions">
+      <p class="loading-note" id="loadingNote">Ma'lumotlar yuklanmoqda...</p>
+    </div>
+
+    <footer><p>© Bolajon · Premium kids shop</p></footer>
+
+  </main>
+
+<script>
+  const API_URL = "/api/v1/list/data/";
+
+  const TG_ICON = `<svg viewBox="0 0 240 240" fill="#fff"><path d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm55.6 82.1-19.6 92.5c-1.5 6.6-5.4 8.2-10.9 5.1l-30.1-22.2-14.5 14c-1.6 1.6-3 3-6.1 3l2.2-30.9 56.3-50.9c2.4-2.2-.5-3.4-3.8-1.2l-69.6 43.8-30-9.4c-6.5-2-6.7-6.5 1.4-9.7l117.4-45.3c5.5-2 10.2 1.3 8.4 9.2z"/></svg>`;
+  const IG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+      <circle cx="12" cy="12" r="4.4"/>
+      <circle cx="17.6" cy="6.4" r="1.1" fill="#fff" stroke="none"/>
+    </svg>`;
+
+  function normalizeHandle(value, base){
+    if(!value) return null;
+    value = value.trim();
+    if(value.startsWith('http')) return value;
+    if(value.startsWith('@')) value = value.slice(1);
+    return base + value;
+  }
+
+  function renderActions(shop){
+    const actions = document.getElementById('actions');
+
+    const mapsUrl = (shop.latitude && shop.longitude)
+      ? `https://maps.google.com/?q=${shop.latitude},${shop.longitude}`
+      : null;
+    const telUrl = shop.phone_number ? `tel:${shop.phone_number}` : null;
+    const tgUrl = normalizeHandle(shop.telegram, 'https://t.me/');
+    const igUrl = normalizeHandle(shop.instagram, 'https://instagram.com/');
+
+    actions.innerHTML = `
+      <a class="cloud-btn yellow" ${mapsUrl ? `href="${mapsUrl}" target="_blank" rel="noopener"` : ''}>
+        <span class="ico">📍</span>
+        <span class="txt"><strong>Manzilimiz</strong><small>Xaritada ko'ramiz</small></span>
+      </a>
+
+      <button class="cloud-btn cyan" type="button" id="phoneToggle">
+        <span class="ico">☎️</span>
+        <span class="txt"><strong>Telefon raqami</strong><small>Vizit kartani ochamiz</small></span>
+      </button>
+      <div class="phone-card" id="phoneCard">
+        <p class="num">${shop.phone_number || '—'}</p>
+        ${telUrl ? `<a class="call-btn" href="${telUrl}">📞 Qo'ng'iroq qilish</a>` : ''}
+      </div>
+
+      <a class="cloud-btn telegram" ${tgUrl ? `href="${tgUrl}" target="_blank" rel="noopener"` : ''}>
+        <span class="ico">${TG_ICON}</span>
+        <span class="txt"><strong>Telegram kanalimiz</strong><small>Yangiliklar va aksiyalar</small></span>
+      </a>
+
+      <a class="cloud-btn instagram" ${igUrl ? `href="${igUrl}" target="_blank" rel="noopener"` : ''}>
+        <span class="ico">${IG_ICON}</span>
+        <span class="txt"><strong>Instagram sahifamiz</strong><small>Yangi tovarlar va foto-lavhalar</small></span>
+      </a>
+    `;
+
+    document.getElementById('phoneToggle').addEventListener('click', () => {
+      document.getElementById('phoneCard').classList.toggle('show');
+    });
+  }
+
+  async function loadShopData(){
+    const actions = document.getElementById('actions');
+    try{
+      const res = await fetch(API_URL);
+      if(!res.ok) throw new Error('Server xatosi: ' + res.status);
+      const data = await res.json();
+      const shop = Array.isArray(data) ? data[0] : (data.results ? data.results[0] : data);
+      if(!shop){
+        actions.innerHTML = '<p class="error-note">Do\'kon ma\'lumotlari topilmadi.</p>';
+        return;
+      }
+      renderActions(shop);
+    }catch(err){
+      actions.innerHTML = '<p class="error-note">Ma\'lumotlarni yuklab bo\'lmadi. Internetni tekshiring.</p>';
+      console.error(err);
+    }
+  }
+
+  loadShopData();
+</script>
+
+</body>
+</html>
